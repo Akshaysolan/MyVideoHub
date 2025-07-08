@@ -2,6 +2,19 @@ import dotenv from 'dotenv';
 import passport from 'passport';
 import User from '../model/userSchema';
 import { Strategy as JWTStrategy, ExtractJwt, StrategyOptions } from 'passport-jwt';
+import { Types } from 'mongoose';
+import { RequestHandler } from 'express';
+
+
+export interface AuthenticatedRequest extends Request{
+
+    user:{
+        _id:Types.ObjectId;
+    };
+}
+
+export type AuthenticatedRequestHandler = RequestHandler<any, any, any, any, AuthenticatedRequest>;
+
 
 const opts : StrategyOptions = {
     jwtFromRequest : ExtractJwt.fromAuthHeaderAsBearerToken(),
