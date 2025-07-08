@@ -1,4 +1,7 @@
-import React from 'react'
+import React from 'react';
+import { RouterProvider } from 'react-router-dom';
+import { router } from './Router';
+import './App.css';
 
 
 function App() {
@@ -6,9 +9,7 @@ function App() {
 
   return (
     <>
-      <div className="text-2xl font-bold text-blue-600 p-4">
-        Hello world
-      </div>
+      <RouterProvider router={router}/>
     </>
   )
 }
