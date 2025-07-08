@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
 import type { AuthFormData } from '../types';
+import { useDispatch } from 'react-redux';
+import type { AppDispath } from '../reducers/store';
+import { signInuser } from '../reducers/auth/authReducer';
 
 const Signup: React.FC = () => {
 
@@ -9,6 +12,8 @@ const Signup: React.FC = () => {
          email : "",
          password : "",
     });
+
+    const dispatch = useDispatch<AppDispath>();
 
     const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
         const {name, value} = e.target;
@@ -21,6 +26,7 @@ const Signup: React.FC = () => {
     const handleSubmit = (e:React.FormEvent)=>{
         e.preventDefault();
         console.log("FormData", FormData);
+        dispatch(signInuser(formData));
     }
 
     return (
@@ -51,7 +57,7 @@ const Signup: React.FC = () => {
                                 className='mt-1 block w-full px-4 py-3 border border-gray-300 rounded-md shadow-sm focus:ring-gray-500 focus:border-green-500'
                             />
                         </div>
-                        <div className='mt-4 text-rose-500'>
+                        <div className='mt-4 text-blue-600'>
                             <Link to="" >Forget your Password</Link>
                         </div>
                         <button

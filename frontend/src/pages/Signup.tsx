@@ -2,12 +2,17 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import { Link } from 'react-router-dom';
 import type { AuthFormData } from '../types';
+import { useDispatch } from 'react-redux';
+import { signupUser } from '../reducers/auth/authReducer';
+import type { AppDispath } from '../reducers/store';
 
 const Signup: React.FC = () => {
   const [formData, setFormData] = useState<AuthFormData>({
     email: "",
     password: "",
   });
+
+  const dispatch = useDispatch<AppDispath>();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -20,6 +25,7 @@ const Signup: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log("Form Data:", formData);
+    dispatch(signupUser(formData));
   };
 
   return (
