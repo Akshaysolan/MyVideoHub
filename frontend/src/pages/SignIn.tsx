@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import type { AuthFormData } from '../types';
 import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispath } from '../reducers/store';
-import { selectLoding, signInuser } from '../reducers/auth/authReducer';
+import { selectLoading, signInuser } from '../reducers/auth/authReducer';
 import { AiOutlineLoading } from 'react-icons/ai';
 
 const Signup: React.FC = () => {
@@ -15,7 +15,7 @@ const Signup: React.FC = () => {
     });
 
 
-    const loading = useSelector(selectLoding);
+    const loading = useSelector(selectLoading);
 
 
     const dispatch = useDispatch<AppDispath>();
