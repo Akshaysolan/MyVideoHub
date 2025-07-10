@@ -1,32 +1,40 @@
 import React, { useState } from 'react';
 import Layout from '../components/Layout';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import type { AuthFormData } from '../types';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import type { AppDispath } from '../reducers/store';
-import { signInuser } from '../reducers/auth/authReducer';
+import { selectLoding, signInuser } from '../reducers/auth/authReducer';
+import { AiOutlineLoading } from 'react-icons/ai';
 
 const Signup: React.FC = () => {
 
     const [formData, setFormData] = useState<AuthFormData>({
-         email : "",
-         password : "",
+        email: "",
+        password: "",
     });
+
+
+    const loading = useSelector(selectLoding);
+
 
     const dispatch = useDispatch<AppDispath>();
 
-    const handleChange = (e:React.ChangeEvent<HTMLInputElement>) =>{
-        const {name, value} = e.target;
-        setFormData((prev) =>({
-             ...prev,
-            [name]:value,
+    const navigate = useNavigate();
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
         }));
     };
 
-    const handleSubmit = (e:React.FormEvent)=>{
+    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("FormData", FormData);
-        dispatch(signInuser(formData));
+        const { email, password } = formData;
+        dispatch(signInuser({ email, password, navigate }));
     }
 
     return (
@@ -61,10 +69,18 @@ const Signup: React.FC = () => {
                             <Link to="" >Forget your Password</Link>
                         </div>
                         <button
+                            disabled={loading}
                             type="submit"
-                            className="mt-6 w-full py-3 px-6 bg-orange-400 text-white rounded-md font-semibold hover:bg-pink-700 transition-colors"
+                            className="mt-6 w-full py-3 px-6 bg-orange-400 text-white rounded-md font-semibold hover:bg-pink-700 transition-colors flex justify-center items-center gap-2"
                         >
-                            sIgn In
+                            {loading ? (
+                                <>
+                                    <AiOutlineLoading className="animate-spin" size={20} />
+                                    Verifying...
+                                </>
+                            ) : (
+                                "Sign In"
+                            )}
                         </button>
                     </form>
                     <p className="text-sm mt-4 text-center">
